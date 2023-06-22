@@ -61,7 +61,7 @@ router.put("/posts/:postId/comments/:commentsId", authMiddleware, async (req, re
     if (userId !== comments.userId) {
       res.status(400).json({ errorMessage: "수정 권한이 없습니다." });
     } else {
-      await Comment.updateOne({ _id: commentsId }, { $set: { comment: comment } });
+      await Comment.updateOne({ _id: commentsId }, { $set: { comment: comment, updatedAt: new Date() } });
       res.status(200).json({ success: true, Message: "댓글을 수정하였습니다." });
     }
   } else {

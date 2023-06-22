@@ -15,6 +15,7 @@ router.get("/posts", async (req, res) => {
         nickname: item.nickname,
         title: item.title,
         createdAt: item.createdAt,
+        updateAt: item.updatedAt,
       }
     })
     res.status(200).json({ getpost });
@@ -62,6 +63,7 @@ router.get("/posts/:postId", async (req, res) => {
         title: item.title,
         content: item.content,
         createdAt: item.createdAt,
+        updateAt: item.updatedAt,
       }
     })
     res.status(200).json({ post });
@@ -76,35 +78,35 @@ router.put("/posts/:postId", authMiddleware, async (req, res) => {
   const { postId } = req.params;
   const { title, content } = req.body;
   const { userId } = res.locals.user;
-//   const post = await Post.findById({_id: postId});
-//   if (post) {
-//     if (userId === post.userId) {
-//       await Post.updateOne({ _id: postId }, { $set: { title, content } });
-//       res.status(200).json({ success: true, message: "게시글을 수정하였습니다." });
-//     } else { 
-//       res.status(400).json({ Message: "게시글 수정 권한이 없습니다." });
-//     }
-//   } else {
-//     res.status(404).json({ errorMessage: "게시글이 존재하지 않습니다." });
-//   }
-// });
+  const post = await Post.findById({_id: postId});
+  if (post) {
+    if (userId === post.userId) {
+      await Post.updateOne({ _id: postId }, { $set: { title, content, updatedAt: new Date() } });
+      res.status(200).json({ success: true, message: "게시글을 수정하였습니다." });
+    } else { 
+      res.status(400).json({ Message: "게시글 수정 권한이 없습니다." });
+    }
+  } else {
+    res.status(404).json({ errorMessage: "게시글이 존재하지 않습니다." });
+  }
+});
 
-try {
-  const post = await Posts.find({ _id: postId });
+// try {
+//   const post = await Post.find({ _id: postId });
 
-  if (!post) return res.status(404).json({errorMessage: "게시글이 존재하지 않습니다."});
-   else if (!title)  return res.status(412).json({errorMessage: "게시글 제목을 입력해 주세요"});
-   else if (!content)  return res.status(412).json({errorMessage: "게시글 내용을 입력해 주세요"});
-   else if (typeof title !== "string") return res.status(412).json({errorMessage: "게시글 제목의 형식이 일치하지 않습니다."});
-   else if (typeof content !== "string") return res.status(412).json({errorMessage: "게시글 내용의 형식이 일치하지 않습니다."});
-   else if (userId !== post.userId) return res.status(412).json({errorMessage: "게시글 수정권한이 없습니다."});
+//   if (!post) return res.status(404).json({errorMessage: "게시글이 존재하지 않습니다."});
+//    else if (!title)  return res.status(412).json({errorMessage: "게시글 제목을 입력해 주세요"});
+//    else if (!content)  return res.status(412).json({errorMessage: "게시글 내용을 입력해 주세요"});
+//    else if (typeof title !== "string") return res.status(412).json({errorMessage: "게시글 제목의 형식이 일치하지 않습니다."});
+//    else if (typeof content !== "string") return res.status(412).json({errorMessage: "게시글 내용의 형식이 일치하지 않습니다."});
+//    else if (userId !== post.userId) return res.status(412).json({errorMessage: "게시글 수정권한이 없습니다."});
   
 
-  await Post.updateOne( { userId, _id: postId },{ $set: {title, content}});
-  res.json({ message: "게시글을 수정하였습니다." });
-} catch (error) {
-  return res.status(400).json({ errorMessage: "게시글 수정에 실패하였습니다." });}
-});
+//   await Post.updateOne( { userId, _id: postId },{ $set: {title, content}});
+//   res.json({ message: "게시글을 수정하였습니다." });
+// } catch (error) {
+//   return res.status(400).json({ errorMessage: "게시글 수정에 실패하였습니다." });}
+// });
 
 
 

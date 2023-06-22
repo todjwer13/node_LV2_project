@@ -5,24 +5,26 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user: {
+  userId: {
     type: String,
     required: true,
   },
-  password: {
+  nickname: {
     type: String,
     required: true,
   },
-  content: {
+  comment: {
     type: String,
     required: true,
   },
   createdAt: {
     type: Date,
-    defalt: Date.now(),
-},
-})
+    default: Date.now(),
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now(),
+  },
+});
 
-// postSchema.set("timestamps",true);미국 시간
-
-module.exports = mongoose.model("comments",commentSchema);
+module.exports = mongoose.model("comments", commentSchema);

@@ -1,28 +1,23 @@
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
-  user: {
+const UserSchema = new mongoose.Schema({
+  nickname: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
     required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    defalt: Date.now(),
-  },
+  }
 })
 
-// postSchema.set("timestamps",true); // 미국 시간
+UserSchema.virtual("userId").get(function () {
+  return this._id.toHexString();
+});
 
-module.exports = mongoose.model("posts",postSchema);
+UserSchema.set("toJSON", {
+  virtuals: true,
+});
+
+module.exports = mongoose.model("User",UserSchema);

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  user: {
+  nickname: {
     type: String,
     required: true,
   },
-  password: {
+  userId: {
     type: String,
     required: true,
   },
@@ -19,10 +19,11 @@ const postSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    defalt: Date.now(),
+    default: Date.now(),
+  },updatedAt: {
+    type: Date,
+    default: Date.now(),
   },
 })
-
-// postSchema.set("timestamps",true); // 미국 시간
 
 module.exports = mongoose.model("posts",postSchema);

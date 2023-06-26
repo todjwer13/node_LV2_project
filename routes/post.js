@@ -94,13 +94,13 @@ router.put("/posts/:postId", authMiddleware, async (req, res) => {
 // try {
 //   const post = await Post.find({ _id: postId });
 
-//   if (!post) return res.status(404).json({errorMessage: "게시글이 존재하지 않습니다."});
-//    else if (!title)  return res.status(412).json({errorMessage: "게시글 제목을 입력해 주세요"});
-//    else if (!content)  return res.status(412).json({errorMessage: "게시글 내용을 입력해 주세요"});
-//    else if (typeof title !== "string") return res.status(412).json({errorMessage: "게시글 제목의 형식이 일치하지 않습니다."});
-//    else if (typeof content !== "string") return res.status(412).json({errorMessage: "게시글 내용의 형식이 일치하지 않습니다."});
-//    else if (userId !== post.userId) return res.status(412).json({errorMessage: "게시글 수정권한이 없습니다."});
-  
+//   if (!post) {return res.status(404).json({errorMessage: "게시글이 존재하지 않습니다."});
+//   } else if (!title) {} return res.status(412).json({errorMessage: "게시글 제목을 입력해 주세요"});
+//   } else if (!content) {} return res.status(412).json({errorMessage: "게시글 내용을 입력해 주세요"});
+//   } else if (typeof title !== "string") { return res.status(412).json({errorMessage: "게시글 제목의 형식이 일치하지 않습니다."});
+//   } else if (typeof content !== "string") { return res.status(412).json({errorMessage: "게시글 내용의 형식이 일치하지 않습니다."});
+//   } else if (userId !== post.userId) { return res.status(412).json({errorMessage: "게시글 수정권한이 없습니다."});
+//   }
 
 //   await Post.updateOne( { userId, _id: postId },{ $set: {title, content}});
 //   res.json({ message: "게시글을 수정하였습니다." });
